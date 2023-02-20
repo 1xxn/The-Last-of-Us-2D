@@ -1,5 +1,6 @@
 package com.corex.thelastofus2d;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.corex.thelastofus2d.TheLastOfUs2D;
@@ -10,6 +11,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("The Last of Us 2D");
+		config.setWindowedMode(1200, 624);
 		new Lwjgl3Application(new TheLastOfUs2D(), config);
 	}
 }
