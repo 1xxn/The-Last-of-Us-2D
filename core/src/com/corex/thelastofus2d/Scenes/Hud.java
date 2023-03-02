@@ -7,11 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.corex.thelastofus2d.TheLastOfUs2D;
 
-public class Hud {
+public class Hud implements Disposable {
     public Stage stage;
     private Viewport viewport;
     private Integer worldTimer;
@@ -41,7 +42,7 @@ public class Hud {
         scoreLabel = new Label(String.format("%6d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         joelLabel = new Label("JOEL", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         table.add(joelLabel).expandX().padTop(10);
@@ -53,5 +54,10 @@ public class Hud {
         table.add(countdownLabel).expandX();
 
         stage.addActor(table);
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
     }
 }

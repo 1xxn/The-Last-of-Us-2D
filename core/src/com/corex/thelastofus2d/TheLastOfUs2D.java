@@ -10,6 +10,7 @@ import com.corex.thelastofus2d.Screens.PlayScreen;
 public class TheLastOfUs2D extends Game {
 	public static final int V_WIDTH = 400;
 	public static final int V_HEIGHT = 208;
+	public static final float PPM = 100; // PPM = pixels per meter
 
 	public SpriteBatch batch;
 	
