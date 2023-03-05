@@ -4,45 +4,10 @@ size: 128, 32
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-joel_standing_right
+joel_sprite
   rotate: false
   xy: 2, 2
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-joel_walking_right01
-  rotate: false
-  xy: 74, 2
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-joel_walking_right02
-  rotate: false
-  xy: 38, 2
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-joel_standing_left
-  rotate: false
-  xy: 92, 2
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-joel_walking_left01
-  rotate: false
-  xy: 56, 2
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-joel_walking_left02
-  rotate: false
-  xy: 20, 2
-  size: 16, 16
-  orig: 16, 16
+  size: 80, 16
+  orig: 80, 16
   offset: 0, 0
   index: -1
