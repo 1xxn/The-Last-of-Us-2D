@@ -17,14 +17,14 @@ public class Hud implements Disposable {
     private Viewport viewport;
     private Integer worldTimer;
     private float timeCount;
-    private Integer score;
+    private static Integer score;
 
-    Label countdownLabel;
-    Label scoreLabel;
-    Label timeLabel;
-    Label levelLabel;
-    Label worldLabel;
-    Label joelLabel;
+    private Label countdownLabel;
+    private static Label scoreLabel;
+    private Label timeLabel;
+    private Label levelLabel;
+    private Label worldLabel;
+    private Label joelLabel;
 
     public Hud(SpriteBatch spriteBatch) {
         worldTimer = 300;
@@ -40,10 +40,10 @@ public class Hud implements Disposable {
 
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabel = new Label(String.format("%6d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        joelLabel = new Label("JOEL", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        timeLabel = new Label("Time", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label("01", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        worldLabel = new Label("Level", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        joelLabel = new Label("Joel", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         table.add(joelLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
@@ -56,6 +56,19 @@ public class Hud implements Disposable {
         stage.addActor(table);
     }
 
+    public void update(float dt) {
+        timeCount += dt;
+        if (timeCount >= 1){
+            worldTimer--;
+            countdownLabel.setText(String.format("%03d", worldTimer));
+            timeCount = 0;
+        }
+    }
+
+    public static void addScore(int value) {
+        score += value;
+        scoreLabel.setText(String.format("%06d", score));
+    }
     @Override
     public void dispose() {
         stage.dispose();

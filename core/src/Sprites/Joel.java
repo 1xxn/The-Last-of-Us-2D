@@ -101,15 +101,19 @@ public class Joel extends Sprite {
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / TheLastOfUs2D.PPM);
+        fixtureDef.filter.categoryBits = TheLastOfUs2D.JOEL_BIT;
+        fixtureDef.filter.maskBits = TheLastOfUs2D.DEFAULT_BIT | TheLastOfUs2D.COIN_BIT | TheLastOfUs2D.BRICK_BIT;
 
         // setting the "feets" correctly for the ground
-        FixtureDef fixtureDef2 = new FixtureDef();
-        EdgeShape feet = new EdgeShape();
-        feet.set(new Vector2(-2 / TheLastOfUs2D.PPM, -4 / TheLastOfUs2D.PPM), new Vector2(2 / TheLastOfUs2D.PPM, -4 / TheLastOfUs2D.PPM));
-        fixtureDef2.shape = feet;
-        b2body.createFixture(fixtureDef2);
 
         fixtureDef.shape = shape;
         b2body.createFixture(fixtureDef);
+
+        EdgeShape head = new EdgeShape();
+        head.set(new Vector2(-2 / TheLastOfUs2D.PPM, 6 / TheLastOfUs2D.PPM), new Vector2(2 / TheLastOfUs2D.PPM, 6 / TheLastOfUs2D.PPM));
+        fixtureDef.shape = head;
+        fixtureDef.isSensor = true;
+
+        b2body.createFixture(fixtureDef).setUserData("head");
     }
 }

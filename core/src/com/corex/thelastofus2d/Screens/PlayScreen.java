@@ -2,9 +2,11 @@ package com.corex.thelastofus2d.Screens;
 
 import Sprites.Joel;
 import Utils.B2WorldCreator;
+import Utils.WorldContactListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -20,6 +22,7 @@ public class PlayScreen implements Screen {
     // reference to our game, used to set screens
     private TheLastOfUs2D game;
     private TextureAtlas atlas;
+    private Music mainMusic;
 
     // basic playscreen variables
     private OrthographicCamera gameCamera;
@@ -53,6 +56,11 @@ public class PlayScreen implements Screen {
         map = mapLoader.load("level01.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / TheLastOfUs2D.PPM);
 
+        // load main music theme
+        mainMusic = Gdx.audio.newMusic(Gdx.files.internal("assets/maintheme.ogg"));
+        mainMusic.setLooping(true);
+        mainMusic.play();
+
         // initially set camera to be centered correctly at start of the map
         gameCamera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
@@ -65,6 +73,8 @@ public class PlayScreen implements Screen {
 
         // create joel in game world
         player = new Joel(world, this);
+
+        world.setContactListener(new WorldContactListener());
     }
 
     public TextureAtlas getAtlas() {
@@ -94,6 +104,7 @@ public class PlayScreen implements Screen {
         world.step(1/60f, 6, 2);
 
         player.update(dt);
+        hud.update(dt);
 
         // attach game camera to our players.x coordinates
         gameCamera.position.x = player.b2body.getPosition().x;
