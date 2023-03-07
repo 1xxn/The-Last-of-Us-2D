@@ -10,20 +10,20 @@ import com.badlogic.gdx.utils.Array;
 import com.corex.thelastofus2d.Screens.PlayScreen;
 import com.corex.thelastofus2d.TheLastOfUs2D;
 
-public class Joel extends Sprite {
+public class Ellie extends Sprite {
     public enum State { FALLING, JUMPING, STANDING, RUNNING };
     public State currentState;
     public State previousState;
     public World world;
     public Body b2body;
-    private TextureRegion joelStand;
-    private Animation<TextureRegion> joelRun;
-    private Animation<TextureRegion> joelJump;
+    private TextureRegion ellieStand;
+    private Animation<TextureRegion> ellieRun;
+    private Animation<TextureRegion> ellieJump;
     private float stateTimer;
     private boolean runningRight;
 
-    public Joel(World world, PlayScreen screen) {
-        super(screen.getAtlas().findRegion("joel_sprite"));
+    public Ellie(World world, PlayScreen screen) {
+        super(screen.getAtlas().findRegion("ellie_sprite"));
         this.world = world;
 
         // initialization of state
@@ -33,17 +33,17 @@ public class Joel extends Sprite {
         runningRight = true;
 
         // create running animation
-        joelRun = createAnimation(screen.getAtlas().findRegion("joel_sprite"), 0, 4, 0.1f);
+        ellieRun = createAnimation(screen.getAtlas().findRegion("ellie_sprite"), 0, 4, 0.1f);
 
         // create jumping animation
-        joelJump = createAnimation(screen.getAtlas().findRegion("joel_sprite"), 1, 2, 0.1f);
+        ellieJump = createAnimation(screen.getAtlas().findRegion("ellie_sprite"), 1, 2, 0.1f);
 
         // create standing texture
-        joelStand = new TextureRegion(getTexture(), 2, 4, 16, 16);
+        ellieStand = new TextureRegion(getTexture(), 2, 4, 16, 16);
 
-        defineJoel();
+        defineEllie();
         setBounds(0, 0, 32 / TheLastOfUs2D.PPM, 32 / TheLastOfUs2D.PPM);
-        setRegion(joelStand);
+        setRegion(ellieStand);
     }
 
     // creating animations
@@ -67,9 +67,9 @@ public class Joel extends Sprite {
 
         TextureRegion region;
         region = switch(currentState) {
-            case JUMPING -> joelJump.getKeyFrame(stateTimer);
-            case RUNNING -> joelRun.getKeyFrame(stateTimer, true);
-            case FALLING, STANDING -> joelStand;
+            case JUMPING -> ellieJump.getKeyFrame(stateTimer);
+            case RUNNING -> ellieRun.getKeyFrame(stateTimer, true);
+            case FALLING, STANDING -> ellieStand;
         };
 
         if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
@@ -92,7 +92,7 @@ public class Joel extends Sprite {
         else return State.STANDING;
     }
 
-    public void defineJoel() {
+    public void defineEllie() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(32 / TheLastOfUs2D.PPM, 32 / TheLastOfUs2D.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -101,7 +101,7 @@ public class Joel extends Sprite {
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / TheLastOfUs2D.PPM);
-        fixtureDef.filter.categoryBits = TheLastOfUs2D.JOEL_BIT;
+        fixtureDef.filter.categoryBits = TheLastOfUs2D.ELLIE_BIT;
         fixtureDef.filter.maskBits = TheLastOfUs2D.DEFAULT_BIT | TheLastOfUs2D.COIN_BIT | TheLastOfUs2D.BRICK_BIT;
 
         // setting the "feets" correctly for the ground
