@@ -1,5 +1,6 @@
 package com.corex.thelastofus2d.Screens;
 
+import Sprites.Ellie;
 import Sprites.Joel;
 import Utils.B2WorldCreator;
 import Utils.WorldContactListener;
@@ -36,11 +37,18 @@ public class PlayScreen implements Screen {
 
     // Box2d variables
     private World world;
-    private Joel player;
+    private Ellie player;
+    private Joel player2;
     private Box2DDebugRenderer b2dr;
+    private String character;
 
-    public PlayScreen(TheLastOfUs2D game) {
-        atlas = new TextureAtlas("Joel.atlas");
+    public PlayScreen(TheLastOfUs2D game, String character) {
+        if (character.equals("Joel")) {
+            atlas = new TextureAtlas("Joel.atlas");
+        } else if (character.equals("Ellie")) {
+            atlas = new TextureAtlas("Ellie.atlas");
+        }
+
         this.game = game;
         // create camera used to follow joel through camera world
         gameCamera = new OrthographicCamera();
@@ -56,10 +64,7 @@ public class PlayScreen implements Screen {
         map = mapLoader.load("level01.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / TheLastOfUs2D.PPM);
 
-        // load main music theme
-        mainMusic = Gdx.audio.newMusic(Gdx.files.internal("assets/maintheme.ogg"));
-        mainMusic.setLooping(true);
-        mainMusic.play();
+        this.character = character;
 
         // initially set camera to be centered correctly at start of the map
         gameCamera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -71,8 +76,13 @@ public class PlayScreen implements Screen {
 
         new B2WorldCreator(world, map);
 
+
         // create joel in game world
-        player = new Joel(world, this);
+        if (character.equals("Joel")) {
+            player2 = new Joel(world, this);
+        } else if (character.equals("Ellie")) {
+            player = new Ellie(world, this);
+        }
 
         world.setContactListener(new WorldContactListener());
     }
@@ -87,14 +97,29 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float dt) {
-        // control our player using immediate impulses
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
-            player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
-            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
-            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+       // TODO need to fix the input player with different players
 
+        // control our player using immediate impulses
+        if (character.equals("Joel")) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+                player2.b2body.applyLinearImpulse(new Vector2(0, 4f), player2.b2body.getWorldCenter(), true);
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player2.b2body.getLinearVelocity().x <= 2)
+                player2.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player2.b2body.getWorldCenter(), true);
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player2.b2body.getLinearVelocity().x >= -2)
+                player2.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player2.b2body.getWorldCenter(), true);
+        } else if (character.equals("Ellie")) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+                player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
+                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
+                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            game.setScreen(new MenuScreen(game));
+            System.out.println("character selection");
+        }
     }
 
     public void update(float dt) {
@@ -103,11 +128,15 @@ public class PlayScreen implements Screen {
 
         world.step(1/60f, 6, 2);
 
-        player.update(dt);
+        if (character.equals("Joel")) {
+            player2.update(dt);
+            gameCamera.position.x = player2.b2body.getPosition().x;
+        } else if (character.equals("Ellie")) {
+            player.update(dt);
+            gameCamera.position.x = player.b2body.getPosition().x;
+        }
         hud.update(dt);
 
-        // attach game camera to our players.x coordinates
-        gameCamera.position.x = player.b2body.getPosition().x;
 
         // update camera with correct coordinates after changes
         gameCamera.update();
@@ -117,6 +146,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
         // separate our update logic from render
         update(delta);
 
@@ -132,7 +162,11 @@ public class PlayScreen implements Screen {
 
         game.batch.setProjectionMatrix(gameCamera.combined);
         game.batch.begin();
-        player.draw(game.batch);
+        if (character.equals("Joel")) {
+            player2.draw(game.batch);
+        } else if (character.equals("Ellie")) {
+            player.draw(game.batch);
+        }
         game.batch.end();
 
         // set our batch to now draw what the hud camera sees

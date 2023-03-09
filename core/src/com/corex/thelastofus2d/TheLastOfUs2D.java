@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.corex.thelastofus2d.Screens.MenuScreen;
 import com.corex.thelastofus2d.Screens.PlayScreen;
 
 public class TheLastOfUs2D extends Game {
@@ -24,7 +25,7 @@ public class TheLastOfUs2D extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
+		setScreen(new MenuScreen(this));
 	}
 
 	@Override
