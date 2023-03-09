@@ -1,5 +1,7 @@
 package com.corex.thelastofus2d.Scenes;
 
+import Sprites.Ellie;
+import Sprites.Joel;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -25,8 +27,12 @@ public class Hud implements Disposable {
     private Label levelLabel;
     private Label worldLabel;
     private Label joelLabel;
+    private Label ellieLabel;
+    private String character;
 
-    public Hud(SpriteBatch spriteBatch) {
+    public Hud(SpriteBatch spriteBatch, String character) {
+        this.character = character;
+
         worldTimer = 300;
         timeCount = 0;
         score = 0;
@@ -44,8 +50,14 @@ public class Hud implements Disposable {
         levelLabel = new Label("01", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel = new Label("Level", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         joelLabel = new Label("Joel", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        ellieLabel = new Label("Ellie", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-        table.add(joelLabel).expandX().padTop(10);
+
+        if (character.equals("Joel")) {
+            table.add(joelLabel).expandX().padTop(10);
+        } else if (character.equals("Ellie")) {
+            table.add(ellieLabel).expandX().padTop(10);
+        }
         table.add(worldLabel).expandX().padTop(10);
         table.add(timeLabel).expandX().padTop(10);
         table.row();

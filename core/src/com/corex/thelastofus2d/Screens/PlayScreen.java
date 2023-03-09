@@ -57,7 +57,7 @@ public class PlayScreen implements Screen {
         gamePort = new FitViewport(TheLastOfUs2D.V_WIDTH / TheLastOfUs2D.PPM, TheLastOfUs2D.V_HEIGHT / TheLastOfUs2D.PPM, gameCamera);
 
         // create out game HUD for scores/timers etc.
-        hud = new Hud(game.batch);
+        hud = new Hud(game.batch, character);
 
         // load our map and setup map renderer
         mapLoader = new TmxMapLoader();
@@ -87,6 +87,7 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldContactListener());
     }
 
+
     public TextureAtlas getAtlas() {
         return atlas;
     }
@@ -97,8 +98,6 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float dt) {
-       // TODO need to fix the input player with different players
-
         // control our player using immediate impulses
         if (character.equals("Joel")) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
