@@ -2,6 +2,7 @@ package com.corex.thelastofus2d.Scenes;
 
 import Sprites.Ellie;
 import Sprites.Joel;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -28,6 +29,7 @@ public class Hud implements Disposable {
     private Label worldLabel;
     private Label joelLabel;
     private Label ellieLabel;
+    private Label fpsLabel;
     private String character;
 
     public Hud(SpriteBatch spriteBatch, String character) {
@@ -51,6 +53,8 @@ public class Hud implements Disposable {
         worldLabel = new Label("Level", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         joelLabel = new Label("Joel", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         ellieLabel = new Label("Ellie", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        fpsLabel = new Label("FPS:" + Gdx.graphics.getFramesPerSecond(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
 
 
         if (character.equals("Joel")) {
@@ -64,6 +68,7 @@ public class Hud implements Disposable {
         table.add(scoreLabel).expandX();
         table.add(levelLabel).expandX();
         table.add(countdownLabel).expandX();
+        table.add(fpsLabel).expandX();
 
         stage.addActor(table);
     }

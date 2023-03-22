@@ -49,11 +49,11 @@ public class MenuScreen implements Screen {
 
         // draw "Play Joel" button
         Texture joelButton = new Texture("joelButton.png");
-        game.batch.draw(joelButton, 200, 300);
+        game.batch.draw(joelButton, 480, 350);
 
         // draw "Play Ellie" button
         Texture ellieButton = new Texture("ellieButton.png");
-        game.batch.draw(ellieButton, 200, 150);
+        game.batch.draw(ellieButton, 480, 200);
 
         game.batch.end();
 
@@ -63,13 +63,13 @@ public class MenuScreen implements Screen {
             camera.unproject(touchPos);
 
             // check if "Play Joel" button is pressed
-            if (touchPos.x > 200 && touchPos.x < 200 + joelButton.getWidth() && touchPos.y > 300 && touchPos.y < 300 + joelButton.getHeight()) {
+            if (touchPos.x > 480 && touchPos.x < 480 + joelButton.getWidth() && touchPos.y > 350 && touchPos.y < 350 + joelButton.getHeight()) {
                 game.setScreen(new PlayScreen(game, "Joel"));
                 System.out.println("Button 1");
                 dispose();
             }
             // check if "Play Ellie" button is pressed
-            else if (touchPos.x > 200 && touchPos.x < 200 + ellieButton.getWidth() && touchPos.y > 150 && touchPos.y < 150 + ellieButton.getHeight()) {
+            else if (touchPos.x > 480 && touchPos.x < 480 + ellieButton.getWidth() && touchPos.y > 200 && touchPos.y < 200 + ellieButton.getHeight()) {
                 game.setScreen(new PlayScreen(game, "Ellie"));
                 System.out.println("Button 2");
                 dispose();
